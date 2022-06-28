@@ -1,32 +1,32 @@
 from rest_framework.response import Response
-from .models import Note
-from .serializers import NoteSerializer
+from .models import Order
+from .serializers import OrderSerializer
 
 
-def getNotesList(request):
-    notes = Note.objects.all().order_by('-updated')
-    serializer = NoteSerializer(notes, many=True)
+def getOrdersList(request):
+    order = Order.objects.all().order_by('-updated')
+    serializer = OrderSerializer(order, many=True)
     return Response(serializer.data)
 
 
-def getNoteDetail(request, pk):
-    notes = Note.objects.get(id=pk)
-    serializer = NoteSerializer(notes, many=False)
+def getOrderDetail(request, pk):
+    order = Order.objects.get(id=pk)
+    serializer = OrderSerializer(order, many=False)
     return Response(serializer.data)
 
 
-def createNote(request):
+def createOrder(request):
     data = request.data
-    note = Note.objects.create(
+    order1 = Order.objects.create(
         body=data['body']
     )
-    serializer = NoteSerializer(note, many=False)
+    serializer = OrderSerializer(order1, many=False)
     return Response(serializer.data)
 
-def updateNote(request, pk):
+def updateOrder(request, pk):
     data = request.data
-    note = Note.objects.get(id=pk)
-    serializer = NoteSerializer(instance=note, data=data)
+    order1 = Order.objects.get(id=pk)
+    serializer = OrderSerializer(instance=order1, data=data)
 
     if serializer.is_valid():
         serializer.save()
@@ -34,7 +34,7 @@ def updateNote(request, pk):
     return serializer.data
 
 
-def deleteNote(request, pk):
-    note = Note.objects.get(id=pk)
-    note.delete()
-    return Response('Note was deleted!')
+def deleteOrder(request, pk):
+    order1 = Order.objects.get(id=pk)
+    order1.delete()
+    return Response('Order was deleted!')
